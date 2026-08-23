@@ -20,7 +20,7 @@ const navItems = [
   { to: "/profile", key: "profile", icon: User },
 ] as const;
 
-export default function AppShell({ children, tripId }: { children: ReactNode; tripId?: string }) {
+export default function AppShell({ children, tripId }: { children: ReactNode; tripId?: string | undefined }) {
   const { t, lang, setLang } = useI18n();
   const [email, setEmail] = useState<string | null>(null);
   const navigate = useNavigate();

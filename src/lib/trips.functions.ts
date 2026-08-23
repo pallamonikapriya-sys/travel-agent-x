@@ -371,7 +371,8 @@ Return JSON: ${shapes[data.module]}`,
       ],
       { json: true },
     );
-    return parseJson<{ items: Record<string, unknown>[] }>(raw);
+    const parsed = parseJson<{ items: unknown[] }>(raw);
+    return { itemsJson: JSON.stringify(parsed.items ?? []) };
   });
 
 export const getFxRate = createServerFn({ method: "POST" })
