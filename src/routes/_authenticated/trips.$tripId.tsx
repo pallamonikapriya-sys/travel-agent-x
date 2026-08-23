@@ -298,7 +298,7 @@ function SuggestionPanel({ tripId, module, lang }: { tripId: string; module: "st
     setLoading(true);
     try {
       const res = await getSuggestions({ data: { tripId, module, lang } });
-      setItems(res.items ?? []);
+      setItems(JSON.parse(res.itemsJson) as Record<string, unknown>[]);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Could not load suggestions");
     } finally {
@@ -328,7 +328,7 @@ function SuggestionPanel({ tripId, module, lang }: { tripId: string; module: "st
           <div key={idx} className="rounded-2xl border border-border bg-card p-5 shadow-md">
             <h3 className="font-semibold">{String(item["name"] ?? `${item["from"]} → ${item["to"]}`)}</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              {String(item["area"] ?? item["operator_or_route"] ?? "")} {item["cuisine"] ? `· ${item["cuisine"]}` : ""} {item["mode"] ? `· ${item["mode"]}` : ""}
+              {String(item["area"] ?? item["operator_or_route"] ?? "")} {item["cuisine"] ? `· ${String(item["cuisine"])}` : ""} {item["mode"] ? `· ${String(item["mode"])}` : ""}
             </p>
             <div className="mt-2 flex flex-wrap gap-2 text-xs">
               {item["price_per_night"] != null && <Badge className="rounded-xl">₹{Number(item["price_per_night"]).toLocaleString("en-IN")}/night</Badge>}
@@ -339,7 +339,7 @@ function SuggestionPanel({ tripId, module, lang }: { tripId: string; module: "st
               {item["status"] != null && <Badge variant="secondary" className="rounded-xl">{String(item["status"])}</Badge>}
               {item["diet"] != null && <Badge variant="secondary" className="rounded-xl">{String(item["diet"])}</Badge>}
             </div>
-            {(item["guest_summary"] || item["why"] || item["notes"] || item["famous_dish"]) && (
+            {Boolean(item["guest_summary"] ?? item["why"] ?? item["notes"] ?? item["famous_dish"]) && (
               <p className="mt-2 text-sm text-muted-foreground">
                 {String(item["guest_summary"] ?? item["why"] ?? item["notes"] ?? "")}
                 {item["famous_dish"] ? ` Must try: ${String(item["famous_dish"])}.` : ""}

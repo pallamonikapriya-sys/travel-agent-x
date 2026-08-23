@@ -57,7 +57,7 @@ function ProfilePage() {
 
   const save = async (patch: Record<string, string>) => {
     if (!profile) return;
-    const { error } = await supabase.from("profiles").update(patch).eq("id", profile.id);
+    const { error } = await supabase.from("profiles").update(patch as never).eq("id", profile.id);
     if (error) {
       toast.error(error.message);
       return;

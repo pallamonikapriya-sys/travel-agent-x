@@ -10,7 +10,7 @@ import { toast } from "sonner";
 
 type Msg = { id: string; role: string; content: string };
 
-export default function ChatBubble({ tripId }: { tripId?: string }) {
+export default function ChatBubble({ tripId }: { tripId?: string | undefined }) {
   const { t, lang } = useI18n();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);

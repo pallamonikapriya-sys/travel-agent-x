@@ -74,7 +74,7 @@ function HomePage() {
   const setPref = async (field: keyof typeof CHIPS, value: string) => {
     const { data } = await supabase.auth.getUser();
     if (!data.user) return;
-    await supabase.from("profiles").update({ [field]: value }).eq("id", data.user.id);
+    await supabase.from("profiles").update({ [field]: value } as never).eq("id", data.user.id);
     setProfile((p) => (p ? { ...p, [field]: value } : p));
   };
 
