@@ -339,7 +339,7 @@ function SuggestionPanel({ tripId, module, lang }: { tripId: string; module: "st
               {item["status"] != null && <Badge variant="secondary" className="rounded-xl">{String(item["status"])}</Badge>}
               {item["diet"] != null && <Badge variant="secondary" className="rounded-xl">{String(item["diet"])}</Badge>}
             </div>
-            {(item["guest_summary"] || item["why"] || item["notes"] || item["famous_dish"]) && (
+            {Boolean(item["guest_summary"] ?? item["why"] ?? item["notes"] ?? item["famous_dish"]) && (
               <p className="mt-2 text-sm text-muted-foreground">
                 {String(item["guest_summary"] ?? item["why"] ?? item["notes"] ?? "")}
                 {item["famous_dish"] ? ` Must try: ${String(item["famous_dish"])}.` : ""}
